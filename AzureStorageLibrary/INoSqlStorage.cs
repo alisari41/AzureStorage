@@ -13,7 +13,7 @@ namespace AzureStorageLibrary
         Task Delete(string rowKey, string partitionKey);
         Task<TEntity> Update(TEntity entity);
         Task<TEntity> Get(string rowKey, string partitionKey);//En verimli iki alanda arama yapıcaz
-        Task<IQueryable<TEntity>> All();
+        IQueryable<TEntity> All();
         IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> query);//Example : productTable.query(x=>x.price>100)
     }
 }
