@@ -8,7 +8,7 @@ using Microsoft.Azure.Cosmos.Table;
 
 namespace AzureStorageLibrary.Services
 {
-    class TableStorage<TEntity> : INoSqlStorage<TEntity> where TEntity : TableEntity, new()//Buraya geçilebilen class mutlaka nesne örneği alınabilien olsun yani new() bize burada abstract veya static alamaz diyor
+    public class TableStorage<TEntity> : INoSqlStorage<TEntity> where TEntity : TableEntity, new()//Buraya geçilebilen class mutlaka nesne örneği alınabilien olsun yani new() bize burada abstract veya static alamaz diyor
     {
         private readonly CloudTableClient _cloudTableClient;//Azure table storage larda işlem yapabilicem. Tüm tablolar üstünde işlem yapmak
         private readonly CloudTable _table;// Tek bir tabloda işlem yapmak

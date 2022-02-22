@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AzureStorageLibrary
 {
-    interface INoSqlStorage<TEntity>
+    public interface INoSqlStorage<TEntity>
     {//Bir tablo ile ilgili en sık kullanılan metodlar tanımlanıcak
         Task<TEntity> Add(TEntity entity);
         Task Delete(string rowKey, string partitionKey);
