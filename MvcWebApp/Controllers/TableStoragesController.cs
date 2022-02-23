@@ -52,6 +52,8 @@ namespace MvcWebApp.Controllers
             //İndex sayfasında görüntüleme yapıcaz
             var product = await _noSqlStorage.Get(rowKey, partitionKey);
 
+
+            //İndex sayfasına yönlendirme yapılıyorsa index metodundaki deperleri tekrar vermek gerekir
             ViewBag.products = _noSqlStorage.All().ToList();
             ViewBag.isUpdate = true;
             return View("Index", product);
@@ -68,10 +70,22 @@ namespace MvcWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(string rowKey, string partitionKey)
         {
             await _noSqlStorage.Delete(rowKey, partitionKey);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Query(int price)
+        {//Fiyat üzerinden sorgulama
+            //İndex sayfasına yönlendirme yapılıyorsa index metodundaki deperleri tekrar vermek gerekir
+            ViewBag.isUpdate = false;
+            ViewBag.products = _noSqlStorage.Query(x => x.Price > price).ToList();
+
+            return View("Index");
+
         }
     }
 }
