@@ -3,16 +3,22 @@
 
 
 <h2>Add Product</h2>
-<form class="form-inline" asp-action="Create" method="post" enctype="application/x-www-form-urlencoded">
-    
-    <input class="form-control mr-1" asp-for="Name" placeholder="Ürün adı"/>
-    <input class="form-control mr-1" asp-for="Price" placeholder="Ürün Fiyat"/>
-    <input class="form-control mr-1" asp-for="Stock" placeholder="Ürün stoüu"/>
-    <input class="form-control mr-1" asp-for="Color" placeholder="Ürün rengi"/>
-    
-    
-    
-    <input class="btn btn-primary" type="submit" value="Ürün Kaydet"/>
+@*isUpdate true ise Update sayfasına gitsin ":" false ise Create sayfasına gitsin*@
+<form class="form-inline" asp-action="@(ViewBag.isUpdate ?  "Update" : "Create")" method="post" enctype="application/x-www-form-urlencoded">
+
+    <input class="form-control mr-1" asp-for="Name" placeholder="Ürün adı" />
+    <input class="form-control mr-1" asp-for="Price" placeholder="Ürün Fiyat" />
+    <input class="form-control mr-1" asp-for="Stock" placeholder="Ürün stoüu" />
+    <input class="form-control mr-1" asp-for="Color" placeholder="Ürün rengi" />
+
+
+    @*güncelleme işlemi yaparken bunlara ihtiyacım olucak o yüzden gözükmese dahi çağırmam gerekir*@
+    <input type="hidden" asp-for="RowKey" />
+    <input type="hidden" asp-for="PartitionKey" />
+    @*ETag = Bir satır üzerinde birden fazla client eş zamanlı işlem yapmaya çalışırsa*@
+    <input type="hidden" asp-for="ETag" />
+
+    <input class="btn btn-primary" type="submit" value=@(ViewBag.isUpdate ?  "Ürün_Güncelle" : "Ürün_Kaydet") />
 </form>
 
 
@@ -35,6 +41,7 @@
         <th>Stock</th>
         <th>Color</th>
         <th>TimeStamp</th>
+        <th>Actions</th>
     </tr>
 
 
@@ -48,6 +55,9 @@
             <td>@item.Stock</td>
             <td>@item.Color</td>
             <td>@item.Timestamp</td>
+            <td>
+                <a class="btn btn-danger" asp-action="Update" asp-controller="TableStorages" asp-route-rowKey="@item.RowKey" asp-route-partitionKey="@item.PartitionKey">Update</a>
+            </td>
         </tr>
     }
 
