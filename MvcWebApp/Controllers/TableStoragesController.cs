@@ -19,6 +19,10 @@ namespace MvcWebApp.Controllers
 
         public IActionResult Index()
         {
+            //Tablo üzerindeki tüm satırları çekmek
+            ViewBag.products = _noSqlStorage.All().ToList();
+
+
             return View();
         }
     }
