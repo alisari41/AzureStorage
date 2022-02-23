@@ -27,7 +27,10 @@ namespace MvcWebApp
         {
 
             //ConnectionString
-            ConnectionStrings.AzureStorageConnectionString = Configuration.GetSection("AzureConnectionStrings")["StorageConStr"];//appsetting.json içindeki deðeri okucam
+            ConnectionStrings.AzureStorageConnectionString = Configuration.GetSection("AzureConnectionStrings")
+                ["StorageCloudStr"];//appsetting.json içindeki Azure cloud deðeri okucam 
+            //Eðer StorageConStr olursa Local  Storage Primary Connection String Adresinde iþlem yapar
+            //Eðer StorageCloudStr olursa Azure cloud  Storage Primary Connection String Adresinde iþlem yapar
             services.AddScoped(typeof(INoSqlStorage<>), typeof(TableStorage<>));
 
 

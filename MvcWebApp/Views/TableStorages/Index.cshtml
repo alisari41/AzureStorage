@@ -1,6 +1,31 @@
 ﻿@using AzureStorageLibrary.Models
+@model Product
+
+
+<h2>Add Product</h2>
+<form class="form-inline" asp-action="Create" method="post" enctype="application/x-www-form-urlencoded">
+    
+    <input class="form-control mr-1" asp-for="Name" placeholder="Ürün adı"/>
+    <input class="form-control mr-1" asp-for="Price" placeholder="Ürün Fiyat"/>
+    <input class="form-control mr-1" asp-for="Stock" placeholder="Ürün stoüu"/>
+    <input class="form-control mr-1" asp-for="Color" placeholder="Ürün rengi"/>
+    
+    
+    
+    <input class="btn btn-primary" type="submit" value="Ürün Kaydet"/>
+</form>
+
+
+
+
+
 
 <h2>Products</h2>
+
+
+
+
+
 <table class="table table-bordered">
     <tr>
         <th>RowKey</th>

@@ -25,5 +25,19 @@ namespace MvcWebApp.Controllers
 
             return View();
         }
+
+        
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Product product)
+        {
+            product.RowKey = Guid.NewGuid().ToString();
+            product.PartitionKey = "Kalemler";
+
+            await _noSqlStorage.Add(product);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
