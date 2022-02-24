@@ -61,7 +61,7 @@ namespace AzureStorageLibrary.Services
         public async Task SetLogAsync(string text, string fileName)
         {//Yazma operasyonu
             //Hangi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
-            var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.Logs.ToString());
+            var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.logs.ToString());
 
             var appendBlobClient = containerClient.GetAppendBlobClient(fileName);
 
@@ -89,7 +89,7 @@ namespace AzureStorageLibrary.Services
             //satır satır okumak için öncelikle list<string> oluşturuldu
             List<string> logs = new List<string>();
             //Hangi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
-            var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.Logs.ToString());
+            var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.logs.ToString());
 
             //Loglama işleminde AppendBlob işlemi kullanıyoruz
             var appendContainerClient = containerClient.GetAppendBlobClient(fileName);

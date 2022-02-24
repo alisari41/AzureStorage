@@ -9,9 +9,10 @@ namespace AzureStorageLibrary
 {
     public enum EContainerName
     {//Resimleri ve pdf ler tutmak için container tutuyorum istersek video falan diğer uzantılar için devam edebiliriz
-        Pictures,
-        Pdf,
-        Logs,
+        //Küçük harf kullanılmak zorunda bunu azure container oluştururken bu isimleri vermemiz gerekir. 
+        pictures,
+        pdf,
+        logs,
     }
     public interface IBlobStorage
     {
