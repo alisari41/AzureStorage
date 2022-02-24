@@ -57,16 +57,37 @@ namespace AzureStorageLibrary.Services
             await blobClient.DeleteAsync();
         }
 
-        public Task SetLogAsync(string text, string fileName)
-        {
-            throw new NotImplementedException();
+        public async Task SetLogAsync(string text, string fileName)
+        {//Yazma operasyonu
+            //Hangi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
+            var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.Logs.ToString());
+
+            var appendBlobClient = containerClient.GetAppendBlobClient(fileName);
+
+            //append blob'ın olup olmadığını tespt ekmek gerekir. Eğer yoksa oluşsun
+            await appendBlobClient.CreateIfNotExistsAsync();
+
+            using (MemoryStream ms =new MemoryStream())
+            {
+                //parametreden gelen text 'i Stream'e çevirecek bir StreamWriter oluşturalım
+                using (StreamWriter sw=new StreamWriter(ms))
+                {//ms (MemoryStream) yi yazıcam 
+                    sw.Write($"{DateTime.Now}:{text}/n");
+
+                    //yazma işleminden sonra temizleniyor.
+                    sw.Flush();
+                    ms.Position = 0; // Yazma işlemine başlarken sıfırdan başlasın. Diyelimki text=Ali SArı ise A'dan başlasın
+
+                    await appendBlobClient.AppendBlockAsync(ms);
+                }
+            }
         }
 
         public async Task<List<string>> GetLogAsync(string fileName)
         {
             //satır satır okumak için öncelikle list<string> oluşturuldu
             List<string> logs = new List<string>();
-            //Hanhi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
+            //Hangi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
             var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.Logs.ToString());
 
             //Loglama işleminde AppendBlob işlemi kullanıyoruz
