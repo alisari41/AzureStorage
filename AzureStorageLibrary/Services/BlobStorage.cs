@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 
 namespace AzureStorageLibrary.Services
 {
@@ -61,9 +62,32 @@ namespace AzureStorageLibrary.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<string>> GetLogAsync(string fileName)
+        public async Task<List<string>> GetLogAsync(string fileName)
         {
-            throw new NotImplementedException();
+            //satır satır okumak için öncelikle list<string> oluşturuldu
+            List<string> logs = new List<string>();
+            //Hanhi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
+            var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.Logs.ToString());
+
+            //Loglama işleminde AppendBlob işlemi kullanıyoruz
+            var appendContainerClient = containerClient.GetAppendBlobClient(fileName);
+
+            // Yoksa oluşsun boş dahi olsa oluşsun ki okuma işlemini gerçekleştirelim
+            await appendContainerClient.CreateIfNotExistsAsync();
+
+            var info = await appendContainerClient.DownloadAsync();
+            //satır satır okuma işlemi yapılması gerekiyor.
+            using (StreamReader sr = new StreamReader(info.Value.Content))
+            {
+                string line = string.Empty;
+
+                while ((line = sr.ReadLine()) != null)//SATIR OKU null olmayana kadar oku
+                {
+                    logs.Add(line);
+                }
+            }
+
+            return logs;
         }
 
         public List<string> GetNames(EContainerName eContainerName)
