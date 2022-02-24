@@ -67,10 +67,10 @@ namespace AzureStorageLibrary.Services
             //append blob'ın olup olmadığını tespt ekmek gerekir. Eğer yoksa oluşsun
             await appendBlobClient.CreateIfNotExistsAsync();
 
-            using (MemoryStream ms =new MemoryStream())
+            using (MemoryStream ms = new MemoryStream())
             {
                 //parametreden gelen text 'i Stream'e çevirecek bir StreamWriter oluşturalım
-                using (StreamWriter sw=new StreamWriter(ms))
+                using (StreamWriter sw = new StreamWriter(ms))
                 {//ms (MemoryStream) yi yazıcam 
                     sw.Write($"{DateTime.Now}:{text}/n");
 
@@ -112,8 +112,17 @@ namespace AzureStorageLibrary.Services
         }
 
         public List<string> GetNames(EContainerName eContainerName)
-        {
-            throw new NotImplementedException();
+        {//Blobları alacağımız metod
+            List<string> blobNames = new List<string>();
+            var containerClient = _blobServiceClient.GetBlobContainerClient(eContainerName.ToString());
+
+            var blobs = containerClient.GetBlobs();//Tüm bloblar geldi
+            blobs.ToList().ForEach(x =>
+            {
+                blobNames.Add(x.Name);
+            });
+
+            return blobNames;
         }
     }
 }
