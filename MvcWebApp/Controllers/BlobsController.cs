@@ -19,7 +19,7 @@ namespace MvcWebApp.Controllers
             _blobStorage = blobStorage;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
             var names = _blobStorage.GetNames(EContainerName.pictures);//İçersindeki isimleri alınıyor.
@@ -34,6 +34,8 @@ namespace MvcWebApp.Controllers
                 Url = $"{blobUrl}/{x}"
             }).ToList();
 
+            ViewBag.logs = await _blobStorage.GetLogAsync("controller.txt");
+
             return View();
         }
 
@@ -41,9 +43,17 @@ namespace MvcWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile picture)
         {
+            //Hangi dosyaya ne yazsın
+            await _blobStorage.SetLogAsync("Upload metot'una giriş yapıldı.", "controller.txt");
+
+
             //Eklenecek resim ismini random oluşturma. = Sol tarafda random isim + sağ tarafta uzantısı jpeg mi pbg mi falan
             var newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
             await _blobStorage.UploadAsync(picture.OpenReadStream(), newFileName, EContainerName.pictures);
+
+
+            await _blobStorage.SetLogAsync("Upload metot'undan çıkış yapıldı.", "controller.txt");
+
             return RedirectToAction("Index");
         }
 

@@ -73,7 +73,7 @@ namespace AzureStorageLibrary.Services
                 //parametreden gelen text 'i Stream'e çevirecek bir StreamWriter oluşturalım
                 using (StreamWriter sw = new StreamWriter(ms))
                 {//ms (MemoryStream) yi yazıcam 
-                    sw.Write($"{DateTime.Now}:{text}/n");
+                    sw.Write($"{DateTime.Now}:{text}\n");
 
                     //yazma işleminden sonra temizleniyor.
                     sw.Flush();
@@ -90,6 +90,10 @@ namespace AzureStorageLibrary.Services
             List<string> logs = new List<string>();
             //Hangi  Container olduğunu biliyoruz o yüzden sadece logu alsak yeter
             var containerClient = _blobServiceClient.GetBlobContainerClient(EContainerName.logs.ToString());
+
+            //Log Container'ı oluştursun 
+            await containerClient.CreateIfNotExistsAsync();
+
 
             //Loglama işleminde AppendBlob işlemi kullanıyoruz
             var appendContainerClient = containerClient.GetAppendBlobClient(fileName);
