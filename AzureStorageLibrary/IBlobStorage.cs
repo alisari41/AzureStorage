@@ -22,12 +22,12 @@ namespace AzureStorageLibrary
         //Task<Strean> geriye Stream döndürecek
         Task<Stream> DownloadAsync(string fileName, EContainerName eContainerName);
 
-        Task DeleteAsync(string fileName);
+        Task DeleteAsync(string fileName, EContainerName eContainerName);
 
 
         //Block Blob
         Task SetLogAsync(string text, string fileName);
-        Task<List<string>> GetLogAsync(string fileName); 
+        Task<List<string>> GetLogAsync(string fileName);
 
 
 

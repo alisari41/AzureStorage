@@ -47,9 +47,13 @@ namespace AzureStorageLibrary.Services
             return info.Value.Content;
         }
 
-        public Task DeleteAsync(string fileName)
-        {
-            throw new NotImplementedException();
+        public async Task DeleteAsync(string fileName, EContainerName eContainerName)
+        {//Azure Container'ı silme
+            //Bir blob kaydedebilmek için önce bir ServiceContainer oluşturmak gerekir.
+            var containerClient = _blobServiceClient.GetBlobContainerClient(eContainerName.ToString());
+
+            var blobClient = containerClient.GetBlobClient(fileName);
+            await blobClient.DeleteAsync();
         }
 
         public Task SetLogAsync(string text, string fileName)
