@@ -54,5 +54,12 @@ namespace MvcWebApp.Controllers
 
             return File(stream, "application/octet-stream", fileName);//tipi ni "octet-stream" vermemim nedeni tipini bilmediğimden 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string fileName)
+        {
+            await _blobStorage.DeleteAsync(fileName, EContainerName.pictures);
+            return RedirectToAction("Index");
+        }
     }
 }
