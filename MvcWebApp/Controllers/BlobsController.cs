@@ -43,11 +43,16 @@ namespace MvcWebApp.Controllers
         {
             //Eklenecek resim ismini random oluşturma. = Sol tarafda random isim + sağ tarafta uzantısı jpeg mi pbg mi falan
             var newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
-
-
             await _blobStorage.UploadAsync(picture.OpenReadStream(), newFileName, EContainerName.pictures);
-
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Download(string fileName)
+        {
+            var stream = await _blobStorage.DownloadAsync(fileName, EContainerName.pictures);
+
+            return File(stream, "application/octet-stream", fileName);//tipi ni "octet-stream" vermemim nedeni tipini bilmediğimden 
         }
     }
 }

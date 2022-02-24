@@ -28,13 +28,13 @@
     {
         <tr>
             <td>
-                <img src="@item.Url" class="img-thumbnail" style="width: 100px;"/>
+                <img src="@item.Url" class="img-thumbnail" style="width: 100px;" />
             </td>
             <td>
                 @item.Name
             </td>
             <td>
-
+                <a class="btn btn-sm btn-outline-info" style="border: 2px solid " asp-action="Download" asp-route-fileName="@item.Name">Download</a>
             </td>
         </tr>
 
