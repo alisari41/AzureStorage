@@ -18,7 +18,8 @@ namespace AzureStorageLibrary.Services
             _blobServiceClient = new BlobServiceClient(ConnectionStrings.AzureStorageConnectionString);
         }
 
-        public string BlobUrl { get; set; }
+        public string BlobUrl => "https://realstorageaccount41.blob.core.windows.net";//realstorageaccount41 oluşturduğum Azure Storage ismi değişince o kısım değişir
+
         public async Task UploadAsync(Stream fileStream, string fileName, EContainerName eContainerName)
         {
             //Bir blob kaydedebilmek için önce bir ServiceContainer oluşturmak gerekir.

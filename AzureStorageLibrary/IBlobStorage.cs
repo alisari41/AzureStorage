@@ -15,7 +15,8 @@ namespace AzureStorageLibrary
     }
     public interface IBlobStorage
     {
-        public string BlobUrl { get; set; }
+        public string BlobUrl { get; }
+
         //Task geriye herhangi birşey döndürmeyecek bu bizim Void metodlara karşılık gelir
         Task UploadAsync(Stream fileStream, string fileName, EContainerName eContainerName);
 
