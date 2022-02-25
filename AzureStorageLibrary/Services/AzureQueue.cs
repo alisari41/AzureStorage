@@ -34,6 +34,10 @@ namespace AzureStorageLibrary.Services
             // Kuyrukta bir mesaj var  mı yok mu
             QueueProperties properties = await _queueClient.GetPropertiesAsync();
 
+            //Eğer biz mesajı aldıktan sonra silme istemiyorsak yani deneme amaçlı mesajı okumak istiyorsak _queueClient.PeekMessageAsync() uygularız 
+            // Eğer direk silmek istiyorsak aşağıda uyguladığım gibi ReceiveMessagesAsync() kullanır mesaj alındıktan işlendikten sonra gizlenir.
+
+
             if (properties.ApproximateMessagesCount > 0)
             {
                 // ReceiveMessagesAsync çoğul geliyor fakat biz 1 mesaj okumak istiyoruz o yüzden 1 veriyoruz görümezlik zamanında 1 dakika verdim Eğer 1 dakika içersinde silemezsem başkları bu mesajı okuyabilir kuyrukta yine mevcut olacağından dolayı başklar bu mesajı okuyabilir çift okuma olur       dikkat et bir mesajı aşağı yukarı ne kadar sürede işlenebiliniyorsa ona yakın süre verilmelidir.
