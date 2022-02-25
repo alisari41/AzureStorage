@@ -11,6 +11,7 @@ namespace AzureStorageLibrary
     {//Resimleri ve pdf ler tutmak için container tutuyorum istersek video falan diğer uzantılar için devam edebiliriz
         //Küçük harf kullanılmak zorunda bunu azure container oluştururken bu isimleri vermemiz gerekir. 
         pictures,
+        watermarkpictures,
         pdf,
         logs,
     }
