@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AzureStorageLibrary;
 using AzureStorageLibrary.Models;
+using AzureStorageLibrary.Services;
 using Microsoft.AspNetCore.Http;
 using MvcWebApp.Models;
+using Newtonsoft.Json;
 
 namespace MvcWebApp.Controllers
 {
@@ -87,6 +90,17 @@ namespace MvcWebApp.Controllers
             await _noSqlStorage.Add(isUser);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> AddWatermarkAsync(PictureWatermarkQueue pictureWatermarkQueue)
+        {
+            var jsonString = JsonConvert.SerializeObject(pictureWatermarkQueue);
+            string jsonStringBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonString));
+
+            AzureQueue azureQueue = new AzureQueue("watermarkqueue");
+            await azureQueue.SendMessageAsync(jsonStringBase64);
+
+            return Ok();
         }
     }
 }
