@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AzureStorageLibrary;
 using AzureStorageLibrary.Services;
+using MvcWebApp.Hubs;
 
 namespace MvcWebApp
 {
@@ -38,7 +39,12 @@ namespace MvcWebApp
             //AddScoped da her seferinde alýnýr AddSingleton da uygulama ayaða kalktýðýnda sadece bir kere alýnýr.
 
 
+
             services.AddControllersWithViews();
+
+
+            //SignalR ekleme
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,6 +68,10 @@ namespace MvcWebApp
 
             app.UseEndpoints(endpoints =>
             {
+                //SignalR hub ekleme
+                endpoints.MapHub<NotificationHub>("/notificationhub");
+
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
