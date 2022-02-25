@@ -69,7 +69,7 @@ namespace MvcWebApp
             app.UseEndpoints(endpoints =>
             {
                 //SignalR hub ekleme
-                endpoints.MapHub<NotificationHub>("/notificationhub");
+                endpoints.MapHub<NotificationHub>("/notificationHub");
 
 
                 endpoints.MapControllerRoute(
