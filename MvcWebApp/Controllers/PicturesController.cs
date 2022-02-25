@@ -32,6 +32,11 @@ namespace MvcWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.UserID = UserId;
+            ViewBag.City = City;
+
+
+
             // Daha önce bir resim var mı varsa listeye ekle
             List<FileBlob> fileBlobs = new List<FileBlob>();
 
@@ -92,8 +97,10 @@ namespace MvcWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> AddWatermarkAsync(PictureWatermarkQueue pictureWatermarkQueue)
+        [HttpPost]
+        public async Task<IActionResult> AddWatermark(PictureWatermarkQueue pictureWatermarkQueue)
         {
+            
             var jsonString = JsonConvert.SerializeObject(pictureWatermarkQueue);
             string jsonStringBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonString));
 

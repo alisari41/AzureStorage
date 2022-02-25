@@ -1,4 +1,47 @@
-﻿
+﻿@* Resimlere tıklanınca seçme işlemi *@
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(() => {
+            //Tıklanan resimleri yakalamak istiyorum
+            var pictures = new Array();
+
+            var UserId = "@ViewBag.UserId";
+            var City = "@ViewBag.City";
+
+
+            $("#AddWatermarkAsync").click(() => {
+
+                var pictureWatermarkQueue = {
+                    "UserId": UserId,
+                    "City": City,
+                    "ConnectionId": "123",
+                    "WatermarkText": $("#WatermarkText").val(),
+                    "WatermarkPictures": pictures
+                };
+
+                // Önce metot adı sonra gönderilecek data yazıldı eğer başarılı olursa datamızı alalım
+                $.post("/Pictures/AddWatermark",pictureWatermarkQueue,(data) => {
+                    console.log("mesaj gönderildi");
+                });
+            });
+
+
+
+
+            $("#images img").click(function () {    // function olarak almazsam this (img) erişemem
+                $(this).css("border", "3px solid red"); // tıklanan image'e css veriyorum
+
+                pictures.push($(this).attr("data-name"));//tıklanan resmi tıklanan resimlere ekliyorum
+
+                console.log(pictures);
+
+            });
+
+        });
+    </script>
+}
 
 <div class="row">
     @* offset-md-2 kodu soldan ve sağdan 2 blok boşluk bırakacak ve tam ortada gözükecek *@
@@ -9,21 +52,28 @@
 
             <input class="btn btn-outline-success" type="submit" value="Add Picture" />
         </form>
+
+
+        <div class="form-inline">
+            @* Resim yazısı ekleme operasyonu *@
+            <input type="text" id="WatermarkText" />
+            <button id="AddWatermarkAsync">Add WaterMark</button>
+        </div>
+
+
+
+        <h2>Pictures</h2>
+
+        <div id="images">
+            @foreach (var item in ViewBag.fileBlobs as List<FileBlob>)
+            {
+                <img style="width: 250px; height: 250px;" data-name="@item.Name" src="@item.Url" />
+            }
+        </div>
+
+
     </div>
-
-
-
-
 </div>
 
 
 
-<h2>Pictures</h2>
-
-
-<div id="images">
-    @foreach (var item in ViewBag.fileBlobs as List<FileBlob>)
-    {
-        <img style="width: 250px; height: 250px;" data-name="@item.Name" src="@item.Url" />
-    }
-</div>
