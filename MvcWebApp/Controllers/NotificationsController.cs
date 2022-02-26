@@ -9,7 +9,7 @@ using MvcWebApp.Hubs;
 
 namespace MvcWebApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class NotificationsController : ControllerBase
     {
@@ -19,11 +19,13 @@ namespace MvcWebApp.Controllers
             _hubContext = hubContext;
         }
 
-        //Client'lar ile iletişim. fuction erişebileceği bir entpoint
+        // Client'lar ile iletişim. fuction erişebileceği bir entpoint
+        // .../CompleteWatermarkProcess/1554351315    bu connectionId yi Url'de almak için HttpGet'e connectionId yazmak gerekir
+        [HttpGet("{connectionId}")]
         public IActionResult CompleteWatermarkProcess(string connectionId)//Tamamlanma olayı
         {
             _hubContext.Clients.Client(connectionId).SendAsync("notifyCompleteWatermarkProcess");//Client buraya subsc. olduysa herhangi bir data göndermicem
-            
+
             return Ok();
         }
     }

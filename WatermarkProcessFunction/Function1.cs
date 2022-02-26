@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AzureStorageLibrary;
 using AzureStorageLibrary.Models;
@@ -16,6 +17,7 @@ namespace WatermarkProcessFunction
         [Function("Function1")]
         public async static Task Run([QueueTrigger("watermarkqueue")] PictureWatermarkQueue myQueueItem, FunctionContext context)
         {
+
             ConnectionStrings.AzureStorageConnectionString = "***REMOVED***";
 
             IBlobStorage blobStorage = new BlobStorage();
@@ -32,6 +34,7 @@ namespace WatermarkProcessFunction
 
                 await blobStorage.UploadAsync(memortStream, item, EContainerName.watermarkpictures);
 
+
                 var logger = context.GetLogger("Function1");
                 logger.LogInformation($"{item} resmine watermark eklenmiþtir.");
 
@@ -47,6 +50,15 @@ namespace WatermarkProcessFunction
             userPicture.WatermarkPaths = myQueueItem.WatermarkPictures;//Yazýsý eklenmiþ olan resimler
 
             await noSqlStorage.Add(userPicture);//Dinamik olarak tabloya yeni kolon ekliyorum
+
+            //Haber verme iþlemi SignalR 
+            HttpClient httpClient = new HttpClient();
+            var response =await httpClient.GetAsync("https://localhost:44389/api/Notifications/CompleteWatermarkProcess/" + myQueueItem.ConnectionId);
+
+            var logger2 = context.GetLogger("Function1");
+            logger2.LogInformation($"Client ({myQueueItem.ConnectionId}) bilgilendirilmiþtir.");
+
+
 
 
 

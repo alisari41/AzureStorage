@@ -17,6 +17,13 @@
                 console.log(`Hub ConnectionId: ${connection.connectionId}`);
             });
 
+            //Çalıştıralacak metoda subsc. oluyorum.        Herhangi bir data almadığı için boş bir fucnction tanımladım
+            connection.on("notifyCompleteWatermarkProcess", () => {
+                console.log("İşlem tamamlandı.");
+
+                $("#status").text("Resimlerinize yazı ekleme işlemi tamamlanmıştır.");
+            });
+
 
             //Tıklanan resimleri yakalamak istiyorum
             var pictures = new Array();
@@ -39,7 +46,8 @@
                 $.post("/Pictures/AddWatermark",
                     pictureWatermarkQueue,
                     (data) => {
-                        console.log("mesaj gönderildi");
+                        $("#status").text("Resimlerinize yazı ekleniyor.");
+
                     });
             });
 
@@ -78,6 +86,8 @@
         </div>
 
 
+        <h2 id="status" style="color: slateblue;"></h2>
+        
 
         <h2>Pictures</h2>
 
