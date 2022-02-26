@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcWebApp", "MvcWebApp\MvcW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureQueueConsoleApp", "AzureQueueConsoleApp\AzureQueueConsoleApp.csproj", "{67668E6F-B963-4DFF-8E74-D250F75F772A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatermarkProcessFunction", "WatermarkProcessFunction\WatermarkProcessFunction.csproj", "{053B9672-E707-460E-A0AF-20FB7408B999}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatermarkProcessFunction", "WatermarkProcessFunction\WatermarkProcessFunction.csproj", "{13DDC818-A028-46C7-9EBB-400295AF0FC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{67668E6F-B963-4DFF-8E74-D250F75F772A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67668E6F-B963-4DFF-8E74-D250F75F772A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67668E6F-B963-4DFF-8E74-D250F75F772A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{053B9672-E707-460E-A0AF-20FB7408B999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{053B9672-E707-460E-A0AF-20FB7408B999}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{053B9672-E707-460E-A0AF-20FB7408B999}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{053B9672-E707-460E-A0AF-20FB7408B999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13DDC818-A028-46C7-9EBB-400295AF0FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13DDC818-A028-46C7-9EBB-400295AF0FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13DDC818-A028-46C7-9EBB-400295AF0FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13DDC818-A028-46C7-9EBB-400295AF0FC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
