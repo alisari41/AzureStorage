@@ -35,7 +35,7 @@ namespace AzureStorageLibrary.Services
 
             //Önce bir serviceClient sonra containerClient sonrasında da BlobClinet
             var blobClient = containerClient.GetBlobClient(fileName);
-            await blobClient.UploadAsync(fileStream);
+            await blobClient.UploadAsync(fileStream, true);//üzerine yazması açık
         }
 
         public async Task<Stream> DownloadAsync(string fileName, EContainerName eContainerName)
