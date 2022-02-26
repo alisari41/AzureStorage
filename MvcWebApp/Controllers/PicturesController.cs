@@ -82,6 +82,7 @@ namespace MvcWebApp.Controllers
             if (isUser != null)
             {
                 pictureList.AddRange(isUser.Paths);//Böyle bir kullanıcı varsa eski resimleri de ekliyorum
+                isUser.Paths = pictureList;// bunu burayada eklemem lazım tabloda user'a ait veri varsa üstüne eklme yaptığında yenileride göstersin
             }
             else
             {//yoksa sıfırdan oluşturdum var zaten üstüne ekledim eskiler artı yeniler şekilde
