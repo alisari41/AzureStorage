@@ -98,10 +98,29 @@ namespace MvcWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public async Task<IActionResult> ShowWatermark()
+        {
+            // Daha önce bir resim var mı varsa listeye ekle
+            List<FileBlob> fileBlobs = new List<FileBlob>();
+
+            UserPicture userPicture = await _noSqlStorage.Get(UserId, City);
+
+            userPicture.WatermarkPaths.ForEach(x =>
+            {
+                fileBlobs.Add(new FileBlob { Name = x, Url = $"{_blobStorage.BlobUrl}/{EContainerName.watermarkpictures}/{x}" });
+            });
+
+            ViewBag.fileBlobs = fileBlobs;
+
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddWatermark(PictureWatermarkQueue pictureWatermarkQueue)
         {
-            
+
             var jsonString = JsonConvert.SerializeObject(pictureWatermarkQueue);
             string jsonStringBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonString));
 
