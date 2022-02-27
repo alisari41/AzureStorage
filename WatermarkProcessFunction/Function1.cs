@@ -52,9 +52,16 @@ namespace WatermarkProcessFunction
             await noSqlStorage.Add(userPicture);//Dinamik olarak tabloya yeni kolon ekliyorum
 
             //Haber verme iþlemi SignalR 
-            HttpClient httpClient = new HttpClient();
+            var endPoint = "https://192.168.0.1/service";
+            var httpHandler = new HttpClientHandler();
+
+            httpHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
+            var httpClient = new HttpClient(httpHandler);
             //await ekleyince kuyruða mesaj dahi gitmiyor
-            var response = httpClient.GetAsync("https://localhost:44389/api/Notifications/CompleteWatermarkProcess/" + myQueueItem.ConnectionId);
+            var response = await httpClient.GetAsync("https://localhost:44389/api/Notifications/CompleteWatermarkProcess/" + myQueueItem.ConnectionId);
 
             var logger2 = context.GetLogger("Function1");
             logger2.LogInformation($"Client ({myQueueItem.ConnectionId}) bilgilendirilmiþtir.");

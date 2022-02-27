@@ -18,11 +18,12 @@
             });
 
             //Çalıştıralacak metoda subsc. oluyorum.        Herhangi bir data almadığı için boş bir fucnction tanımladım
-            connection.on("notifyCompleteWatermarkProcess", () => {
-                console.log("İşlem tamamlandı.");
+            connection.on("notifyCompleteWatermarkProcess",
+                () => {
+                    console.log("İşlem tamamlandı.");
 
-                $("#status").text(`Resimlerinize yazı ekleme işlemi tamamlanmıştır. <a href="/pictures/ShowWatermark">işlenmiş resimlerinizi görmek için tıklayınız</a>`);
-            });
+                    $("#status").text(`Resimlerinize yazı ekleme işlemi tamamlanmıştır.`);
+                });
 
 
             //Tıklanan resimleri yakalamak istiyorum
@@ -70,7 +71,7 @@
     @* offset-md-2 kodu soldan ve sağdan 2 blok boşluk bırakacak ve tam ortada gözükecek *@
     <div class="col-md-8 offset-md-2">
 
-        <a href="/pictures/ShowWatermark">işlenmiş resimlerinizi görmek için tıklayınız</a>
+        <a href="/pictures/ShowWatermark">İşlenmiş resimlerinizi görmek için tıklayınız</a>
         <form class="form-inline" asp-action="Index" method="post" enctype="multipart/form-data">
             @* name="parametrede kullanılan adın aynısı" *@
             <input type="file" name="pictures" multiple /> @* multiple ile kullanıcı birden fazla resim seçebilsin *@
