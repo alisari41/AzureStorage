@@ -18,7 +18,7 @@ namespace WatermarkProcessFunction
         public async static Task Run([QueueTrigger("watermarkqueue")] PictureWatermarkQueue myQueueItem, FunctionContext context)
         {
 
-            ConnectionStrings.AzureStorageConnectionString = "***REMOVED***";
+            ConnectionStrings.AzureStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=realstorageaccount41;AccountKey=Z1g8K87KaicSESnwlbjfinZicQ09CtyKLjWnzVs/r6IF5kD7z1c9lFonrLmc/ydyJv6rk+63Krm1r0pCGhq3+w==;EndpointSuffix=core.windows.net";
 
             IBlobStorage blobStorage = new BlobStorage();
             // Veritabanýnda güncelleme iþlemleri

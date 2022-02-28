@@ -10,7 +10,7 @@ namespace AzureQueueConsoleApp
        async static Task Main(string[] args)
         {
             AzureStorageLibrary.ConnectionStrings.AzureStorageConnectionString =
-                "***REMOVED***";
+                "DefaultEndpointsProtocol=https;AccountName=realstorageaccount41;AccountKey=Z1g8K87KaicSESnwlbjfinZicQ09CtyKLjWnzVs/r6IF5kD7z1c9lFonrLmc/ydyJv6rk+63Krm1r0pCGhq3+w==;EndpointSuffix=core.windows.net";
 
             AzureQueue queue = new AzureQueue("ornekkuyruk");
 
