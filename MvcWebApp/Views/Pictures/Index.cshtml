@@ -21,48 +21,49 @@
             connection.on("notifyCompleteWatermarkProcess",
                 () => {
                     console.log("İşlem tamamlandı.");
+                    $("#status2").fadeIn(2000, () => {});
 
                     $("#status").text(`Resimlerinize yazı ekleme işlemi tamamlanmıştır.`);
                 });
 
 
-            //Tıklanan resimleri yakalamak istiyorum
-            var pictures = new Array();
+        //Tıklanan resimleri yakalamak istiyorum
+        var pictures = new Array();
 
-            var UserId = "@ViewBag.UserId";
-            var City = "@ViewBag.City";
-
-
-            $("#AddWatermarkAsync").click(() => {
-
-                var pictureWatermarkQueue = {
-                    "UserId": UserId,
-                    "City": City,
-                    "ConnectionId": connection.connectionId,
-                    "WatermarkText": $("#WatermarkText").val(),
-                    "WatermarkPictures": pictures
-                };
-
-                // Önce metot adı sonra gönderilecek data yazıldı eğer başarılı olursa datamızı alalım
-                $.post("/Pictures/AddWatermark",
-                    pictureWatermarkQueue,
-                    (data) => {
-                        $("#status").text("Resimlerinize yazı ekleniyor.");
-
-                    });
-            });
+        var UserId = "@ViewBag.UserId";
+        var City = "@ViewBag.City";
 
 
-            $("#images img").click(function() { // function olarak almazsam this (img) erişemem
-                $(this).css("border", "3px solid red"); // tıklanan image'e css veriyorum
+        $("#AddWatermarkAsync").click(() => {
 
-                pictures.push($(this).attr("data-name")); //tıklanan resmi tıklanan resimlere ekliyorum
+            var pictureWatermarkQueue = {
+                "UserId": UserId,
+                "City": City,
+                "ConnectionId": connection.connectionId,
+                "WatermarkText": $("#WatermarkText").val(),
+                "WatermarkPictures": pictures
+            };
 
-                console.log(pictures);
+            // Önce metot adı sonra gönderilecek data yazıldı eğer başarılı olursa datamızı alalım
+            $.post("/Pictures/AddWatermark",
+                pictureWatermarkQueue,
+                (data) => {
+                    $("#status").text("Resimlerinize yazı ekleniyor.");
 
-            });
+                });
+        });
+
+
+        $("#images img").click(function() { // function olarak almazsam this (img) erişemem
+            $(this).css("border", "3px solid red"); // tıklanan image'e css veriyorum
+
+            pictures.push($(this).attr("data-name")); //tıklanan resmi tıklanan resimlere ekliyorum
+
+            console.log(pictures);
 
         });
+
+    });
     </script>
 }
 
@@ -71,7 +72,6 @@
     @* offset-md-2 kodu soldan ve sağdan 2 blok boşluk bırakacak ve tam ortada gözükecek *@
     <div class="col-md-8 offset-md-2">
 
-        <a href="/pictures/ShowWatermark">İşlenmiş resimlerinizi görmek için tıklayınız</a>
         <form class="form-inline" asp-action="Index" method="post" enctype="multipart/form-data">
             @* name="parametrede kullanılan adın aynısı" *@
             <input type="file" name="pictures" multiple /> @* multiple ile kullanıcı birden fazla resim seçebilsin *@
@@ -90,6 +90,7 @@
 
 
         <h2 id="status" style="color: slateblue;"></h2>
+        <a href="/pictures/ShowWatermark" id="status2" style="display: none;">İşlenmiş resimlerinizi görmek için tıklayınız</a>
 
 
         <h2>Pictures</h2>
